@@ -126,6 +126,7 @@ html {
 .tile__image {
   height: 100%;
   width: 100%;
+  background-size: cover;
 }
 
 .window__footer {
