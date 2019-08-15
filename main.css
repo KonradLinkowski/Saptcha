@@ -93,12 +93,12 @@ html {
   outline: none;
 }
 
-.tile--selected * {
-  transform: scale(.8);
+.tile * {
+  transition: 0.1s ease;
 }
 
-.tile--selected:focus {
-  outline: none;
+.tile--selected * {
+  transform: scale(.8);
 }
 
 .tile--selected::after {
