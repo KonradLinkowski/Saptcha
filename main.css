@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+:root {
+  --padding: 7px;
+  --background: rgb(74, 144, 226);
+  --window-width: 400px;
+}
+
+html {
+  font-family: 'Roboto', helvetica, arial, sans-serif;
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.window {
+  width: var(--window-width);
+  border: 1px solid rgb(204, 204, 204);
+  box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px;
+  color: white;
+}
+
+.window__header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--background);
+  margin: var(--padding);
+  margin-bottom: 0;
+  padding: 24px;
+}
+
+.header__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info__select {
+  font-size: 12px;
+}
+
+.info__object {
+  font-size: 28px;
+}
+
+.info_verify {
+  font-size: 14px;
+}
+
+.window__body {
+  padding: var(--padding);
+  height: calc(var(--window-width) - var(--padding) * 2);
+  overflow: hidden;
+}
+
+.tiles_container {
+  display: grid;
+}
+
+.tiles_container--3 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 4px 4px;
+}
+
+.tiles_container--4 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 2px 2px;
+}
+
+.tile {
+  cursor: pointer;
+}
+
+.tile:focus {
+  outline: solid orange;
+}
+
+.window__footer {
+  border-top: 1px solid #dfdfdf;
+  margin-top: 1px;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--padding);
+}
+
+.button {
+  background: none;
+  box-shadow: 0;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  height: 42px;
+  padding: 0;
+}
+
+.button--action {
+  width: 48px;
+  opacity: .55;
+}
+
+.button--action:hover, .button--action:focus {
+  opacity: .8;
+  outline: none;
+}
+
+.button--action svg {
+  width: 28px;
+  height: auto;
+}
+
+.button--verify {
+  text-transform: uppercase;
+  background-color: var(--background);
+  min-width: 100px;
+  padding: 0 10px;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 2px;
+  transition: all 0.5s ease;
+}
+
+.button--verify:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2pt #185abc;
+}
