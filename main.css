@@ -62,6 +62,8 @@ html {
 }
 
 .tiles_container {
+  height: 100%;
+  width: 100%;
   display: grid;
 }
 
@@ -78,11 +80,52 @@ html {
 }
 
 .tile {
+  position: relative;
+  display: inline-block;
   cursor: pointer;
 }
 
 .tile:focus {
   outline: solid orange;
+}
+
+.tile:active {
+  outline: none;
+}
+
+.tile--3 {
+  max-height: 126px;
+}
+
+.tile--4 {
+  max-height: 95px;
+}
+
+.tile--selected * {
+  transform: scale(.8);
+}
+
+.tile--selected:focus {
+  outline: none;
+}
+
+.tile--selected::after {
+  content: "";
+  background-image: url('images/checkmark.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 10;
+  color: black;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.tile__image {
+  height: 100%;
+  width: 100%;
 }
 
 .window__footer {
