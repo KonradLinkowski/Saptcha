@@ -11,7 +11,6 @@
     img.style.backgroundImage = 'url("images/95.png")'
     img.classList.add('tile__image')
     wrapper.classList.add('tile')
-    wrapper.classList.add(`tile--${col}`)
     wrapper.setAttribute('tabindex', 0)
     wrapper.addEventListener('click', selectTile)
     wrapper.dataset['index'] = index
