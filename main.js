@@ -144,7 +144,7 @@
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', skip)
   resetButton.addEventListener('click', skip)
-  const columns = 3
+  const columns = 4
   const selectedTiles = Array(columns ** 2).fill(false)
   const game = new Game(columns ** 2, 25)
   renderGrid(columns);
