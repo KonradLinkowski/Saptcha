@@ -7,16 +7,16 @@ const shape = {
   cat: [{
     t: SHAPE.POLYGON,
     p: [
-      [18, 25],
-      [18, 3],
-      [29, 18]
+      [17, 25],
+      [15, 3],
+      [27, 18]
     ]
   }, {
     t: SHAPE.POLYGON,
     p: [
-      [45, 30],
-      [45, 3],
-      [34, 18]
+      [46, 30],
+      [48, 3],
+      [36, 18]
     ],
   }, {
     t: SHAPE.CIRCLE,
@@ -44,12 +44,12 @@ const shape = {
   bear: [{
     t: SHAPE.CIRCLE,
     x: 20,
-    y: 20,
+    y: 17,
     r: 10,
   }, {
     t: SHAPE.CIRCLE,
     x: 44,
-    y: 20,
+    y: 17,
     r: 10,
   }, {
     t: SHAPE.CIRCLE,
@@ -70,7 +70,7 @@ const shape = {
     t: SHAPE.CIRCLE,
     x: 32,
     y: 32,
-    r: 2,
+    r: 3,
   }]
 }
 

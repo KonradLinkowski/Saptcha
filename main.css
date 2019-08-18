@@ -6,6 +6,11 @@
   --window-width: 100vw;
 }
 
+* {
+  transition: color 0.3s ease;
+  transition: background-image 5ss ease;
+}
+
 html {
   font-family: 'Roboto', helvetica, arial, sans-serif;
 }
@@ -18,8 +23,30 @@ html {
   right: 0;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.points {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  width: var(--window-width);
+  padding: var(--padding);
+  font-size: 24px;
+}
+
+.points__counter {
+  font-weight: bold;
+}
+
+.points__counter--win {
+  color: green;
+}
+
+.points__counter--lose {
+  color: red;
 }
 
 .window {

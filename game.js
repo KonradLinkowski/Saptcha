@@ -11,8 +11,10 @@ class Game {
   verify(selected) {
     const won = selected.map((e, i) => e && i).filter(e => e).join()
       == this.images.map((t, i) => t.name === this.expectedObject && i).filter(t => t).join()
-    this.points += this.reward * (won || -1)
-    return won
+      const nextPoints = this.points + this.reward * (won || -1)
+    return {
+      won, curr: this.points, next: this.points = nextPoints > 0 ? nextPoints : 0
+    }
   }
 
   newRound() {
