@@ -104,7 +104,7 @@
       selectTile(wrapper, false)
       image.style.backgroundImage = `url(${drawImage(shapes[index])})`
     })
-    objectsName.textContent = expected
+    objectsName.textContent = `${(expected.match(/^[aeuio]/i) ? 'an' : 'a')} ${expected}`
   }
 
   const verifySelection = e => {
