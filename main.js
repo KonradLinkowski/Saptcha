@@ -48,7 +48,7 @@
     const wrapper = document.createElement('div')
     const img = document.createElement('div')
     wrapper.appendChild(img)
-    img.style.backgroundImage = 'url("images/95.png")'
+    img.style.backgroundImage = 'url("images/placeholder.png")'
     img.classList.add('tile__image')
     wrapper.classList.add('tile')
     wrapper.setAttribute('aria-checked', 'false')
@@ -66,7 +66,7 @@
   }
 
   const renderGrid = columnSize => {
-    const numberOfTiles = columnSize ** 2;
+    const numberOfTiles = columnSize ** 2
     const tiles = Array(numberOfTiles).fill((Math.sqrt(numberOfTiles))).map(createTile)
     tilesContainer.append(...tiles)
     const availableSizes = [3, 4]
@@ -147,7 +147,7 @@
   const columns = 4
   const selectedTiles = Array(columns ** 2).fill(false)
   const game = new Game(columns ** 2, 25)
-  renderGrid(columns);
+  renderGrid(columns)
   loadStorage()
   newRound()
 })()

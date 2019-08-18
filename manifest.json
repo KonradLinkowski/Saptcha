@@ -1,0 +1,17 @@
+{
+  "short_name": "Captcha",
+  "name": "Captcha Game",
+  "icons": [
+    {
+      "src": "/captcha-game/images/placeholder.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/captcha-game/",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/captcha-game/",
+  "orientation": "portrait",
+  "theme_color": "#4A90E2"
+}
