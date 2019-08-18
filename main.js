@@ -98,6 +98,28 @@
     return canvas.toDataURL()
   }
 
+  const saveRecord = () => {
+    const best = localStorage.getItem('captcha_game_best_record')
+      if (best < game.points) {
+        localStorage.setItem('captcha_game_best_record', game.points)
+      }
+    localStorage.setItem('captcha_game_last_record', game.points)
+  }
+
+  const loadStorage = () => {
+    const lastPoints = localStorage.getItem('captcha_game_last_record')
+    if (lastPoints) {
+      game.points = +lastPoints
+      countUp(0, +lastPoints, 5, 5)
+    } else {
+      localStorage.setItem('captcha_game_last_record', game.points)
+    }
+    const bestRecord = localStorage.getItem('captcha_game_best_record')
+    if (!bestRecord) {
+      localStorage.setItem('captcha_game_best_record', game.points)
+    }
+  }
+
   const newRound = () => {
     const { shapes, expected } = game.newRound()
     tiles.forEach(({ wrapper, image, index }) => {
@@ -110,6 +132,7 @@
   const verifySelection = e => {
     const { won, curr, next } = game.verify(selectedTiles)
     countUp(curr, next, 1, 5)
+    saveRecord()
     newRound()
   }
 
@@ -125,5 +148,6 @@
   const selectedTiles = Array(columns ** 2).fill(false)
   const game = new Game(columns ** 2, 25)
   renderGrid(columns);
+  loadStorage()
   newRound()
 })()
