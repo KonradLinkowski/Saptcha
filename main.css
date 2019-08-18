@@ -8,11 +8,11 @@
 
 * {
   transition: color 0.3s ease;
-  transition: background-image 5ss ease;
 }
 
 html {
   font-family: 'Roboto', helvetica, arial, sans-serif;
+  color: white;
 }
 
 .wrapper {
