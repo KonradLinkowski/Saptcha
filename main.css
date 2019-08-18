@@ -103,7 +103,7 @@ html {
 
 .tile--selected::after {
   content: "";
-  background-image: url('images/checkmark.png');
+  background-image: url('images/checkmark.svg');
   background-repeat: no-repeat;
   position: absolute;
   z-index: 10;
@@ -155,7 +155,7 @@ html {
   height: auto;
 }
 
-.button--verify {
+.button--submit {
   text-transform: uppercase;
   background-color: var(--background);
   min-width: 100px;
@@ -166,7 +166,7 @@ html {
   transition: all 0.5s ease;
 }
 
-.button--verify:focus {
+.button--submit:focus {
   outline: 0;
   box-shadow: 0 0 0 2pt #185abc;
 }
@@ -175,4 +175,8 @@ html {
   :root {
     --window-width: 400px;
   }
+}
+
+.hidden {
+  display: none;
 }
