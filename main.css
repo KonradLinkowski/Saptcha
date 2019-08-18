@@ -29,12 +29,13 @@ html {
 }
 
 .points {
+  position: absolute;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  width: var(--window-width);
-  padding: var(--padding);
   font-size: 24px;
+  right: 24px;
+  top: 24px;
 }
 
 .points__counter {
@@ -42,11 +43,11 @@ html {
 }
 
 .points__counter--win {
-  color: green;
+  color: #0f0;
 }
 
 .points__counter--lose {
-  color: red;
+  color: #f00;
 }
 
 .window {
@@ -57,6 +58,7 @@ html {
 }
 
 .window__header {
+  position: relative;
   display: flex;
   justify-content: space-between;
   background-color: var(--background);
