@@ -3,15 +3,15 @@
   "name": "Captcha Game",
   "icons": [
     {
-      "src": "/captcha-game/images/placeholder.png",
+      "src": "images/placeholder.png",
       "type": "image/png",
       "sizes": "192x192"
     }
   ],
-  "start_url": "/captcha-game/",
+  "start_url": "./",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/captcha-game/",
+  "scope": ".",
   "orientation": "portrait",
   "theme_color": "#4A90E2"
 }
