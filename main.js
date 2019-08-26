@@ -7,10 +7,23 @@
   const resetButton = document.querySelector('#reset_button')
   const objectsName = document.querySelector('#objects_name')
   const pointsCounter = document.querySelector('#points_counter')
+  const installButton = document.querySelector('#install_button')
 
   const canvas = document.createElement('canvas')
   canvas.width = canvas.height = 128
   const ctx = canvas.getContext('2d')
+
+  const install = event => {
+    event.prompt();
+    event.userChoice
+    .then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+    });
+  }
 
   const countUp = (curr, max, jump, pad) => {
     let sum = curr
@@ -140,6 +153,11 @@
     newRound()
   }
 
+  window.addEventListener("beforeinstallprompt", e => {
+    installButton.classList.toggle('hidden', false)
+    installButton.addEventListener('click', () => install(e))
+  })
+  window.addEventListener("appinstalled", () => installButton.classList.toggle('hidden', true))
   document.addEventListener('keypress', ({ code }) => code == 'Enter' && verifyButton.click())
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', skip)
