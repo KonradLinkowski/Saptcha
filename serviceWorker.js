@@ -29,12 +29,11 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
       console.log('[Service Worker] Fetching resource:', event.request.url)
-      return response || fetch(event.request).then(response => {
-        return caches.open(cacheName).then(cache => {
-          console.log('[Service Worker] Caching new resource:', event.request.url)
-          cache.put(event.request, response.clone())
-          return response
-        })
+      return response || fetch(event.request).then(async response => {
+        const cache = await caches.open(cacheName)
+        console.log('[Service Worker] Caching new resource:', event.request.url)
+        cache.put(event.request, response.clone())
+        return response
       }).catch(error => {
         console.log('Could not fetch', event.request, error)
       })
