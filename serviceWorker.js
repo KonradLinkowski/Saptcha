@@ -28,8 +28,7 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
-      console.log('[Service Worker] Fetching resource:', event.request.url)
-      return response || fetch(event.request).then(async response => {
+      const newData = fetch(event.request).then(async response => {
         const cache = await caches.open(cacheName)
         console.log('[Service Worker] Caching new resource:', event.request.url)
         cache.put(event.request, response.clone())
@@ -37,6 +36,13 @@ self.addEventListener('fetch', event => {
       }).catch(error => {
         console.log('Could not fetch', event.request, error)
       })
+      return response || newData
     })
   )
+})
+
+self.addEventListener('message', event => {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting()
+  }
 })
