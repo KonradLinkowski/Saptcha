@@ -9,7 +9,7 @@
   const pointsCounter = document.querySelector('#points_counter')
 
   const canvas = document.createElement('canvas')
-  canvas.width = canvas.height = 64
+  canvas.width = canvas.height = 128
   const ctx = canvas.getContext('2d')
 
   const countUp = (curr, max, jump, pad) => {
