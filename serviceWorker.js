@@ -9,7 +9,7 @@ const preCachedFiles = [
   'main.js',
   'game.js',
   'images/checkmark.svg',
-  'images/placeholder.png',
+  'images/image.png',
   'manifest.json',
   'registerServiceWorker.js',
   'serviceWorker.js'

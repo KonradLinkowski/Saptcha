@@ -3,7 +3,7 @@
   "name": "Captcha Game",
   "icons": [
     {
-      "src": "images/placeholder.png",
+      "src": "images/image.png",
       "type": "image/png",
       "sizes": "192x192"
     }

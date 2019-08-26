@@ -61,7 +61,7 @@
     const wrapper = document.createElement('div')
     const img = document.createElement('div')
     wrapper.appendChild(img)
-    img.style.backgroundImage = 'url("images/placeholder.png")'
+    img.style.backgroundImage = 'url("images/image.png")'
     img.classList.add('tile__image')
     wrapper.classList.add('tile')
     wrapper.setAttribute('aria-checked', 'false')
