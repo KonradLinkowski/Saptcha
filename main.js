@@ -49,8 +49,8 @@
     selectedTiles[el.dataset.index] = el.classList.toggle('tile--selected', value)
     el.setAttribute('aria-checked', value)
     const someTilesSelected = selectedTiles.some(e => e)
-    verifyButton.classList.toggle('hidden', !someTilesSelected)
-    skipButton.classList.toggle('hidden', someTilesSelected)
+    verifyButton.classList.toggle('undisplayed', !someTilesSelected)
+    skipButton.classList.toggle('undisplayed', someTilesSelected)
   }
 
   const onSelectTile = e => {
@@ -140,6 +140,7 @@
       image.style.backgroundImage = `url(${drawImage(shapes[index])})`
     })
     objectsName.textContent = `${(expected.match(/^[aeuio]/i) ? 'an' : 'a')} ${expected}`
+    objectsName.classList.toggle('hidden', false)
   }
 
   const verifySelection = e => {
@@ -154,10 +155,10 @@
   }
 
   window.addEventListener("beforeinstallprompt", e => {
-    installButton.classList.toggle('hidden', false)
+    installButton.classList.toggle('undisplayed', false)
     installButton.addEventListener('click', () => install(e))
   })
-  window.addEventListener("appinstalled", () => installButton.classList.toggle('hidden', true))
+  window.addEventListener("appinstalled", () => installButton.classList.toggle('undisplayed', true))
   document.addEventListener('keypress', ({ code }) => code == 'Enter' && verifyButton.click())
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', skip)
