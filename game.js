@@ -18,10 +18,10 @@ class Game {
   }
 
   newRound() {
-    this.images = Array(this.size).fill(0).map(() => shapes[randomInt(0, shapes.length)])
-    this.expectedObject = shapes[randomInt(0, shapes.length)].name
+    this.images = Array(this.size).fill(0).map(() => animals[randomInt(0, animals.length)])
+    this.expectedObject = animals[randomInt(0, animals.length)].name
     return {
-      shapes: this.images.map(i => i.value),
+      comps: this.images.map(i => i.comps),
       expected: this.expectedObject
     }
   }

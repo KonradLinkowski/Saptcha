@@ -86,27 +86,31 @@
     availableSizes.forEach(size => tilesContainer.classList.toggle(`tiles_container--${size}`, columnSize == size))
   }
 
-  const drawImage = shapes => {
+  const drawImage = components => {
     ctx.fillStyle = '#eee'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-    shapes.forEach(shape => {
-      ctx.beginPath()
-      ctx.fillStyle = randomColor()
-      switch (shape.t) {
-        case SHAPE.POLYGON:
-          shape.p.forEach(([x, y], i) => {
+    components.forEach(comp => {
+      comp.forEach(shape => {
+        ctx.beginPath()
+        ctx.fillStyle = randomColor()
+        if (typeof shape[0] === 'number') {
+          const [x, y, r] = shape
+          ctx.arc(
+            x + randomAround(r / 8),
+            y + randomAround(r / 8),
+            r + randomAround(r / 8),
+            0, Math.PI * 2)
+        } else {
+          shape.forEach(([x, y], i) => {
             const fun = i == 0 ? ctx.moveTo.bind(ctx) : ctx.lineTo.bind(ctx)
             fun(x + randomAround(1), y + randomAround(1))
           })
-        break
-        case SHAPE.CIRCLE:
-          ctx.arc(shape.x + randomAround(shape.r / 8), shape.y + randomAround(shape.r / 8), shape.r + randomAround(shape.r / 8), 0, Math.PI * 2)
-        break
-      }
-      ctx.closePath()
-      ctx.fill()
-      ctx.fillStyle = '#000'
-      ctx.stroke()
+        }
+        ctx.closePath()
+        ctx.fill()
+        ctx.fillStyle = '#000'
+        ctx.stroke()
+      })
     })
     return canvas.toDataURL()
   }
@@ -134,12 +138,12 @@
   }
 
   const newRound = () => {
-    const { shapes, expected } = game.newRound()
+    const { comps, expected } = game.newRound()
     tiles.forEach(({ wrapper, image, index }) => {
       selectTile(wrapper, false)
-      image.style.backgroundImage = `url(${drawImage(shapes[index])})`
+      image.style.backgroundImage = `url(${drawImage(comps[index])})`
     })
-    objectsName.textContent = `${(expected.match(/^[aeuio]/i) ? 'an' : 'a')} ${expected}`
+    objectsName.textContent = `${(expected.match(/^[aeiou]/i) ? 'an' : 'a')} ${expected}`
     objectsName.classList.toggle('hidden', false)
   }
 
