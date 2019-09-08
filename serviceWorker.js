@@ -32,7 +32,6 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(response => {
       const newData = fetch(event.request).then(async response => {
         const cache = await caches.open(cacheName)
-        console.log('[Service Worker] Caching new resource:', event.request.url)
         cache.put(event.request, response.clone())
         return response
       }).catch(error => {
