@@ -1,0 +1,24 @@
+{
+  "name": "google-captcha",
+  "version": "1.0.0",
+  "main": "index.html",
+  "repository": "https://github.com/KonradLinkowski/captcha-game",
+  "author": "Konrad Linkowski <linkowski.konrad97@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "gulp"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-imagemin": "^6.1.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-zip": "^5.0.0"
+  }
+}
