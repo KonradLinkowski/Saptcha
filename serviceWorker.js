@@ -4,23 +4,25 @@ const preCachedFiles = [
   '',
   'index.html',
   'main.css',
-  'shapes.js',
-  'util.js',
-  'main.js',
-  'game.js',
+  'js/shapes.js',
+  'js/util.js',
+  'js/main.js',
+  'js/game.js',
   'images/checkmark.svg',
   'images/image.png',
   'manifest.json',
   'registerServiceWorker.js',
-  'serviceWorker.js'
 ]
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(cacheName).then(cache => {
       return cache.addAll(preCachedFiles)
+      .catch(error => {
+        console.error('Could not cache files', error)
+      })
     }).catch(error => {
-      console.log('Could not open the cache', error)
+      console.error('Could not open the cache', error)
     })
   )
 })
@@ -34,7 +36,7 @@ self.addEventListener('fetch', event => {
         cache.put(event.request, response.clone())
         return response
       }).catch(error => {
-        console.log('Could not fetch', event.request, error)
+        console.error('Could not fetch', event.request, error)
       })
       return response || newData
     })

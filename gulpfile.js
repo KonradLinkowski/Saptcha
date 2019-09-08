@@ -1,8 +1,6 @@
 const gulp = require('gulp')
-const concat = require('gulp-concat')
 const minify = require('gulp-minify')
 const del = require('del')
-const htmlReplace = require('gulp-html-replace')
 const minifyHTML = require('gulp-htmlmin')
 const cleanCSS = require('gulp-clean-css')
 const imageMin = require('gulp-imagemin')
@@ -13,7 +11,7 @@ gulp.task('clean', () =>
 )
 
 gulp.task('sw', () =>
-  gulp.src(['serviceWorker.js', 'registerServiceWorker.js', '!gulpfile.js'])
+  gulp.src(['{serviceWorker,registerServiceWorker}.js'])
   .pipe(minify({
     ext: {
       min: '.js'
@@ -24,15 +22,14 @@ gulp.task('sw', () =>
 )
 
 gulp.task('js', () =>
-  gulp.src(['util.js', 'shapes.js', 'game.js', 'main.js', '!gulpfile.js'])
-  .pipe(concat('build.js'))
+  gulp.src(['js/{util,shapes,game,main}.js'])
   .pipe(minify({
     ext: {
       min: '.js'
     },
     noSource: true
   }))
-  .pipe(gulp.dest('dist'))
+  .pipe(gulp.dest('dist/js'))
 )
 
 gulp.task('css', () =>
@@ -50,9 +47,6 @@ gulp.task('image', () =>
 
 gulp.task('html', () =>
   gulp.src('index.html')
-  .pipe(htmlReplace({
-    js: 'build.js'
-  }))
   .pipe(minifyHTML({
     collapseWhitespace: true
   }))
