@@ -125,24 +125,24 @@
   }
 
   const saveRecord = () => {
-    const best = localStorage.getItem('captcha_game_best_record')
+    const best = localStorage.getItem('saptcha_best_record')
     if (best < game.points) {
-      localStorage.setItem('captcha_game_best_record', game.points)
+      localStorage.setItem('saptcha_best_record', game.points)
     }
-    localStorage.setItem('captcha_game_last_record', game.points)
+    localStorage.setItem('saptcha_last_record', game.points)
   }
 
   const loadStorage = () => {
-    const lastPoints = localStorage.getItem('captcha_game_last_record')
+    const lastPoints = localStorage.getItem('saptcha_last_record')
     if (lastPoints) {
       game.points = +lastPoints
       countUp(0, +lastPoints, 5, 5)
     } else {
-      localStorage.setItem('captcha_game_last_record', game.points)
+      localStorage.setItem('saptcha_last_record', game.points)
     }
-    const bestRecord = localStorage.getItem('captcha_game_best_record')
+    const bestRecord = localStorage.getItem('saptcha_best_record')
     if (!bestRecord) {
-      localStorage.setItem('captcha_game_best_record', game.points)
+      localStorage.setItem('saptcha_best_record', game.points)
     }
   }
 

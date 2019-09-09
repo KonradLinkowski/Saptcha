@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const cacheName = 'captcha-game'
+const cacheName = 'saptcha'
 
 const preCachedFiles = [
   '',

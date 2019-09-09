@@ -24,18 +24,18 @@
       })
     }
   }
-  const isAppOpen = localStorage.getItem('captcha_game_open')
+  const isAppOpen = localStorage.getItem('saptcha_open')
   const text = document.querySelector('.loaded-container')
   if (isAppOpen && isAppOpen !== randomId) {
     text.classList.toggle('undisplayed', false)
   } else {
-    localStorage.setItem('captcha_game_open', randomId)
+    localStorage.setItem('saptcha_open', randomId)
     registerServiceWorker()
   }
   window.addEventListener('beforeunload', () => {
-    const isAppStillOpen = localStorage.getItem('captcha_game_open')
+    const isAppStillOpen = localStorage.getItem('saptcha_open')
     if (isAppStillOpen && isAppStillOpen === randomId) {
-      localStorage.removeItem('captcha_game_open')
+      localStorage.removeItem('saptcha_open')
       return 'Are you sure you want to leave?'
     }
     return null

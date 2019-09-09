@@ -1,8 +1,8 @@
 {
-  "name": "google-captcha",
+  "name": "saptcha",
   "version": "1.0.0",
   "main": "index.html",
-  "repository": "https://github.com/KonradLinkowski/captcha-game",
+  "repository": "https://github.com/KonradLinkowski/Saptcha",
   "author": "Konrad Linkowski <linkowski.konrad97@gmail.com>",
   "license": "MIT",
   "private": true,
