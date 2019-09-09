@@ -4,10 +4,6 @@
   --window-width: 100vw;
 }
 
-* {
-  transition: color 0.3s ease;
-}
-
 html {
   font-family: helvetica, arial, sans-serif;
   color: white;
@@ -58,6 +54,7 @@ html {
 }
 
 .points__counter {
+  transition: color 0.3s ease;
   font-weight: bold;
 }
 

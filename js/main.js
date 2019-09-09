@@ -154,7 +154,6 @@
       image.style.backgroundImage = `url(${drawImage(comps[index])})`
     })
     objectsName.textContent = `${(expected.match(/^[aeiou]/i) ? 'an' : 'a')} ${expected}`
-    objectsName.classList.toggle('hidden', false)
   }
 
   const verifySelection = () => {
