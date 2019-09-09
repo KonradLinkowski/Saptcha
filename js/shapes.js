@@ -25,7 +25,7 @@ const comp = {
     ],
     smallRound: [
       [38, 32, 20], [90, 32, 20]
-    ],
+    ]
   },
   eyes: {
     round: [
@@ -62,8 +62,6 @@ const comp = {
   }
 }
 
-
-
 const animals = Object.entries({
   cat: [
     comp.ears.pointed,
@@ -76,7 +74,7 @@ const animals = Object.entries({
     comp.ears.smallRound,
     comp.body.bigRound,
     comp.eyes.round,
-    comp.nose.bigRound,
+    comp.nose.bigRound
   ],
   mouse: [
     comp.ears.bigRound,
@@ -84,5 +82,7 @@ const animals = Object.entries({
     comp.eyes.round,
     comp.nose.round,
     comp.beard.whiskers
-  ],
+  ]
 }).map(([name, comps]) => ({ name, comps }))
+
+window.animals = animals

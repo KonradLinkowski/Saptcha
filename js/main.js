@@ -1,5 +1,8 @@
+/* global Game, randomColor, randomAround */
+
 (() => {
   'use strict'
+
   const tilesContainer = document.querySelector('#tiles_container')
   const tiles = []
   const verifyButton = document.querySelector('#verify_button')
@@ -10,19 +13,24 @@
   const installButton = document.querySelector('#install_button')
 
   const canvas = document.createElement('canvas')
-  canvas.width = canvas.height = 128
+  canvas.width = 128
+  canvas.height = 128
   const ctx = canvas.getContext('2d')
 
+  const columns = 4
+  const selectedTiles = Array(columns ** 2).fill(false)
+  const game = new Game(columns ** 2, 25)
+
   const install = event => {
-    event.prompt();
+    event.prompt()
     event.userChoice
-    .then((choiceResult) => {
+    .then(choiceResult => {
       if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
+        console.log('User accepted the A2HS prompt')
       } else {
-        console.log('User dismissed the A2HS prompt');
+        console.log('User dismissed the A2HS prompt')
       }
-    });
+    })
   }
 
   const countUp = (curr, max, jump, pad) => {
@@ -38,7 +46,7 @@
       next = sum < 0 ? 0 : sum
     }
     pointsCounter.textContent = next.toString().padStart(pad, '0')
-    if (next != max) {
+    if (next !== max) {
       setTimeout(countUp, 25, next, max, jump, pad)
     } else {
       pointsCounter.classList.remove('points__counter--win', 'points__counter--lose')
@@ -68,7 +76,7 @@
     wrapper.setAttribute('role', 'checkbox')
     wrapper.setAttribute('tabindex', 0)
     wrapper.addEventListener('click', onSelectTile)
-    wrapper.addEventListener('keypress', e => e.code == 'Space' && onSelectTile(e))
+    wrapper.addEventListener('keypress', e => e.code === 'Space' && onSelectTile(e))
     wrapper.dataset.index = index
     tiles.push({
       wrapper,
@@ -80,10 +88,10 @@
 
   const renderGrid = columnSize => {
     const numberOfTiles = columnSize ** 2
-    const tiles = Array(numberOfTiles).fill((Math.sqrt(numberOfTiles))).map(createTile)
-    tilesContainer.append(...tiles)
+    const tileElements = Array(numberOfTiles).fill((Math.sqrt(numberOfTiles))).map(createTile)
+    tilesContainer.append(...tileElements)
     const availableSizes = [3, 4]
-    availableSizes.forEach(size => tilesContainer.classList.toggle(`tiles_container--${size}`, columnSize == size))
+    availableSizes.forEach(size => tilesContainer.classList.toggle(`tiles_container--${size}`, columnSize === size))
   }
 
   const drawImage = components => {
@@ -99,10 +107,11 @@
             x + randomAround(r / 8),
             y + randomAround(r / 8),
             r + randomAround(r / 8),
-            0, Math.PI * 2)
+            0, Math.PI * 2
+          )
         } else {
           shape.forEach(([x, y], i) => {
-            const fun = i == 0 ? ctx.moveTo.bind(ctx) : ctx.lineTo.bind(ctx)
+            const fun = i === 0 ? ctx.moveTo.bind(ctx) : ctx.lineTo.bind(ctx)
             fun(x + randomAround(1), y + randomAround(1))
           })
         }
@@ -117,9 +126,9 @@
 
   const saveRecord = () => {
     const best = localStorage.getItem('captcha_game_best_record')
-      if (best < game.points) {
-        localStorage.setItem('captcha_game_best_record', game.points)
-      }
+    if (best < game.points) {
+      localStorage.setItem('captcha_game_best_record', game.points)
+    }
     localStorage.setItem('captcha_game_last_record', game.points)
   }
 
@@ -141,35 +150,33 @@
     const { comps, expected } = game.newRound()
     tiles.forEach(({ wrapper, image, index }) => {
       selectTile(wrapper, false)
+      // eslint-disable-next-line no-param-reassign
       image.style.backgroundImage = `url(${drawImage(comps[index])})`
     })
     objectsName.textContent = `${(expected.match(/^[aeiou]/i) ? 'an' : 'a')} ${expected}`
     objectsName.classList.toggle('hidden', false)
   }
 
-  const verifySelection = e => {
-    const { won, curr, next } = game.verify(selectedTiles)
+  const verifySelection = () => {
+    const { curr, next } = game.verify(selectedTiles)
     countUp(curr, next, 1, 5)
     saveRecord()
     newRound()
   }
 
-  const skip = e => {
+  const skip = () => {
     newRound()
   }
 
-  window.addEventListener("beforeinstallprompt", e => {
+  window.addEventListener('beforeinstallprompt', e => {
     installButton.classList.toggle('undisplayed', false)
     installButton.addEventListener('click', () => install(e))
   })
-  window.addEventListener("appinstalled", () => installButton.classList.toggle('undisplayed', true))
-  document.addEventListener('keypress', ({ code }) => code == 'Enter' && verifyButton.click())
+  window.addEventListener('appinstalled', () => installButton.classList.toggle('undisplayed', true))
+  document.addEventListener('keypress', ({ code }) => code === 'Enter' && verifyButton.click())
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', skip)
   resetButton.addEventListener('click', skip)
-  const columns = 4
-  const selectedTiles = Array(columns ** 2).fill(false)
-  const game = new Game(columns ** 2, 25)
   renderGrid(columns)
   loadStorage()
   newRound()

@@ -1,3 +1,4 @@
+/* global animals, randomInt */
 class Game {
   constructor(size, reward) {
     this.size = size
@@ -10,10 +11,12 @@ class Game {
 
   verify(selected) {
     const won = selected.map((e, i) => e && i).filter(e => e).join()
-      == this.images.map((t, i) => t.name === this.expectedObject && i).filter(t => t).join()
-      const nextPoints = this.points + this.reward * (won || -1)
+      === this.images.map((t, i) => t.name === this.expectedObject && i).filter(t => t).join()
+    const nextPoints = this.points + this.reward * (won || -1)
+    const currPoints = this.points
+    this.points = nextPoints > 0 ? nextPoints : 0
     return {
-      won, curr: this.points, next: this.points = nextPoints > 0 ? nextPoints : 0
+      won, curr: currPoints, next: this.points
     }
   }
 
@@ -26,3 +29,5 @@ class Game {
     }
   }
 }
+
+window.Game = Game

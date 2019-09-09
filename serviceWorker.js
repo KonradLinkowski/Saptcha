@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 const cacheName = 'captcha-game'
 
 const preCachedFiles = [
@@ -11,17 +12,19 @@ const preCachedFiles = [
   'images/checkmark.svg',
   'images/image.png',
   'manifest.json',
-  'registerServiceWorker.js',
+  'registerServiceWorker.js'
 ]
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(cacheName).then(cache => {
-      return cache.addAll(preCachedFiles)
+    caches.open(cacheName)
+    .then(cache =>
+      cache.addAll(preCachedFiles)
       .catch(error => {
         console.error('Could not cache files', error)
       })
-    }).catch(error => {
+    )
+    .catch(error => {
       console.error('Could not open the cache', error)
     })
   )
@@ -29,15 +32,17 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      const newData = fetch(event.request).then(async response => {
+    caches.match(event.request).then(matches => {
+      const newData = fetch(event.request)
+      .then(async response => {
         const cache = await caches.open(cacheName)
         cache.put(event.request, response.clone())
         return response
-      }).catch(error => {
+      })
+      .catch(error => {
         console.error('Could not fetch', event.request, error)
       })
-      return response || newData
+      return matches || newData
     })
   )
 })

@@ -5,14 +5,16 @@
       navigator.serviceWorker.register('serviceWorker.js')
       .then(reg => {
         reg.addEventListener('updatefound', () => {
-          newWorker = reg.installing
+          const newWorker = reg.installing
           newWorker.addEventListener('statechange', () => {
             switch (newWorker.state) {
               case 'installed':
                 if (navigator.serviceWorker.controller) {
                   newWorker.postMessage({ action: 'skipWaiting' })
                 }
-                break;
+                break
+              default:
+                break
             }
           })
         })
@@ -31,8 +33,8 @@
     registerServiceWorker()
   }
   window.addEventListener('beforeunload', () => {
-    const isAppOpen = localStorage.getItem('captcha_game_open')
-    if (isAppOpen && isAppOpen === randomId) {
+    const isAppStillOpen = localStorage.getItem('captcha_game_open')
+    if (isAppStillOpen && isAppStillOpen === randomId) {
       localStorage.removeItem('captcha_game_open')
       return 'Are you sure you want to leave?'
     }
