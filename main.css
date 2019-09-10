@@ -37,6 +37,10 @@ html {
   background: rgba(0, 0, 0, 0.9);
 }
 
+.loaded-container.fade-in {
+  animation: fade-in 0.3s;
+}
+
 .loaded-text {
   font-size: 30px;
   color: white;
@@ -219,6 +223,20 @@ html {
   :root {
     --window-width: 400px;
   }
+}
+
+.button.fade-in {
+  animation: buttons-fade-in 1s;
+}
+
+@keyframes buttons-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 0.55; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .hidden {

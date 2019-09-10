@@ -11,7 +11,7 @@
   <title>Saptcha</title>
   <meta name="description" content="Slightly Automated Public Turing test to tell Computers and Humans Apart. Game made for js13k competition. PWA and web monetization features.">
   <meta name="theme-color" content="#4A90E2">
-  <meta property="og:image" content="images/images.png">
+  <meta property="og:image" content="https://konradlinkowski.github.io/Saptcha/images/image.png">
   <meta property="og:image:width" content="256">
   <meta property="og:image:height" content="256">
   <meta property="og:image:type" content="image/png">
@@ -51,7 +51,7 @@
               <path fill="none" d="M0 0h24v24H0V0z"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
             </svg>
           </button>
-          <button class="button button--action undisplayed" id="install_button" title="Install the app">
+          <button class="button button--action fade-in undisplayed" id="install_button" title="Install the app">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/><path fill="none" d="M0 0h24v24H0z"/>
             </svg>
@@ -61,8 +61,8 @@
         <button class="button button--submit" id="skip_button">Skip</button>
       </footer>
     </main>
-    <div class="loaded-container undisplayed">
-      <span class="loaded-text">The game is already loaded in another window</span>
+    <div class="loaded-container fade-in undisplayed">
+      <span class="loaded-text">The game has already been loaded in another window</span>
     </div>
   </div>
   <script src="registerServiceWorker.js"></script>
