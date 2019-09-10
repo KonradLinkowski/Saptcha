@@ -1,5 +1,4 @@
 (() => {
-  const randomId = Math.random().toString(36).substr(2, 9)
   const registerServiceWorker = () => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('serviceWorker.js')
@@ -24,20 +23,5 @@
       })
     }
   }
-  const isAppOpen = localStorage.getItem('saptcha_open')
-  const text = document.querySelector('.loaded-container')
-  if (isAppOpen && isAppOpen !== randomId) {
-    text.classList.toggle('undisplayed', false)
-  } else {
-    localStorage.setItem('saptcha_open', randomId)
-    registerServiceWorker()
-  }
-  window.addEventListener('beforeunload', () => {
-    const isAppStillOpen = localStorage.getItem('saptcha_open')
-    if (isAppStillOpen && isAppStillOpen === randomId) {
-      localStorage.removeItem('saptcha_open')
-      return 'Are you sure you want to leave?'
-    }
-    return null
-  })
+  registerServiceWorker()
 })()
