@@ -167,12 +167,44 @@
     newRound()
   }
 
+  const moveToOtherTile = jump => {
+    const index = Number(document.activeElement.dataset.index)
+    const newIndex = (index + jump + tiles.length) % tiles.length || 0
+    tiles.find(({ wrapper }) => Number(wrapper.dataset.index) === newIndex).wrapper.focus()
+  }
+
+  const handleKeyboard = ({ code }) => {
+    switch (code) {
+      case 'Enter':
+        verifyButton.click()
+        break
+      case 'ArrowUp':
+      case 'KeyW':
+        moveToOtherTile(-columns)
+        break
+      case 'ArrowRight':
+      case 'KeyD':
+        moveToOtherTile(+1)
+        break
+      case 'ArrowDown':
+      case 'KeyS':
+        moveToOtherTile(+columns)
+        break
+      case 'ArrowLeft':
+      case 'KeyA':
+        moveToOtherTile(-1)
+        break
+      default:
+        break
+    }
+  }
+
   window.addEventListener('beforeinstallprompt', e => {
     installButton.classList.toggle('undisplayed', false)
     installButton.addEventListener('click', () => install(e))
   })
   window.addEventListener('appinstalled', () => installButton.classList.toggle('undisplayed', true))
-  document.addEventListener('keypress', ({ code }) => code === 'Enter' && verifyButton.click())
+  window.addEventListener('keydown', handleKeyboard)
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', skip)
   resetButton.addEventListener('click', skip)
