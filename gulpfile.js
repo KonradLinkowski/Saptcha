@@ -5,6 +5,7 @@ const minifyHTML = require('gulp-htmlmin')
 const cleanCSS = require('gulp-clean-css')
 const imageMin = require('gulp-imagemin')
 const zip = require('gulp-zip')
+const replace = require('gulp-replace')
 
 gulp.task('clean', () =>
   del('dist/**', { force: true })
@@ -47,6 +48,7 @@ gulp.task('image', () =>
 
 gulp.task('html', () =>
   gulp.src('index.html')
+  .pipe(replace(/.*property="og:image.*/g, ''))
   .pipe(minifyHTML({
     collapseWhitespace: true
   }))
