@@ -20,7 +20,7 @@
         })
       })
       .catch(error => {
-        console.error('Service worker registration failed, error:', error)
+        console.warn('Service worker registration failed, error:', error)
       })
     }
   }

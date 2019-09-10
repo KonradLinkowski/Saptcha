@@ -21,11 +21,11 @@ self.addEventListener('install', event => {
     .then(cache =>
       cache.addAll(preCachedFiles)
       .catch(error => {
-        console.error('Could not cache files', error)
+        console.warn('Could not cache files', error)
       })
     )
     .catch(error => {
-      console.error('Could not open the cache', error)
+      console.warn('Could not open the cache', error)
     })
   )
 })
@@ -40,7 +40,7 @@ self.addEventListener('fetch', event => {
         return response
       })
       .catch(error => {
-        console.error('Could not fetch', event.request, error)
+        console.warn('Could not fetch', event.request, error)
       })
       return matches || newData
     })
