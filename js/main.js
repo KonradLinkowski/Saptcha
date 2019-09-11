@@ -3,20 +3,6 @@
 (() => {
   'use strict'
 
-  const tilesContainer = document.querySelector('#tiles_container')
-  const tiles = []
-  const verifyButton = document.querySelector('#verify_button')
-  const skipButton = document.querySelector('#skip_button')
-  const resetButton = document.querySelector('#reset_button')
-  const objectsName = document.querySelector('#objects_name')
-  const pointsCounter = document.querySelector('#points_counter')
-  const installButton = document.querySelector('#install_button')
-  const infoButton = document.querySelector('#info_button')
-  const clsoeButton = document.querySelector('#close_button')
-
-  const mainWindow = document.querySelector('#main_window')
-  const modal = document.querySelector('#modal')
-
   const canvas = document.createElement('canvas')
   canvas.width = 128
   canvas.height = 128
@@ -31,21 +17,17 @@
   const selectedTiles = Array(columns ** 2).fill(false)
   const game = new Game(columns ** 2, 25)
 
-  const install = event => {
-    event.prompt()
-    event.userChoice
-    .then(choiceResult => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt')
-      } else {
-        console.log('User dismissed the A2HS prompt')
-      }
-    })
-  }
+  const pointsCounter = document.querySelector('#points_counter')
+  const mainWindow = document.querySelector('#main_window')
+  const modal = document.querySelector('#modal')
 
   const openModal = open => {
     modal.classList.toggle('hidden', !open)
     mainWindow.classList.toggle('covered', open)
+    const isFirstTime = !localStorage.getItem('saptcha_first_time')
+    if (isFirstTime) {
+      localStorage.setItem('saptcha_first_time', new Date().toString())
+    }
   }
 
   const countUp = (curr, max, jump, pad) => {
@@ -66,6 +48,47 @@
     } else {
       pointsCounter.classList.remove('win', 'lose')
     }
+  }
+
+  const loadStorage = () => {
+    const isFirstTime = !localStorage.getItem('saptcha_first_time')
+    if (isFirstTime) {
+      openModal(true)
+    }
+    const lastPoints = localStorage.getItem('saptcha_last_record')
+    if (lastPoints) {
+      game.points = +lastPoints
+      countUp(0, +lastPoints, 5, 5)
+    } else {
+      localStorage.setItem('saptcha_last_record', game.points)
+    }
+    const bestRecord = localStorage.getItem('saptcha_best_record')
+    if (!bestRecord) {
+      localStorage.setItem('saptcha_best_record', game.points)
+    }
+  }
+
+  loadStorage()
+  const tilesContainer = document.querySelector('#tiles_container')
+  const tiles = []
+  const verifyButton = document.querySelector('#verify_button')
+  const skipButton = document.querySelector('#skip_button')
+  const resetButton = document.querySelector('#reset_button')
+  const objectsName = document.querySelector('#objects_name')
+  const installButton = document.querySelector('#install_button')
+  const infoButton = document.querySelector('#info_button')
+  const clsoeButton = document.querySelector('#close_button')
+
+  const install = event => {
+    event.prompt()
+    event.userChoice
+    .then(choiceResult => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt')
+      } else {
+        console.log('User dismissed the A2HS prompt')
+      }
+    })
   }
 
   const selectTile = (el, value) => {
@@ -150,20 +173,6 @@
     localStorage.setItem('saptcha_last_record', game.points)
   }
 
-  const loadStorage = () => {
-    const lastPoints = localStorage.getItem('saptcha_last_record')
-    if (lastPoints) {
-      game.points = +lastPoints
-      countUp(0, +lastPoints, 5, 5)
-    } else {
-      localStorage.setItem('saptcha_last_record', game.points)
-    }
-    const bestRecord = localStorage.getItem('saptcha_best_record')
-    if (!bestRecord) {
-      localStorage.setItem('saptcha_best_record', game.points)
-    }
-  }
-
   const newRound = () => {
     const { comps, expected } = game.newRound()
     tiles.forEach(({ wrapper, image, index }) => {
@@ -229,6 +238,5 @@
   infoButton.addEventListener('click', () => openModal(true))
   clsoeButton.addEventListener('click', () => openModal(false))
   renderGrid(columns)
-  loadStorage()
   newRound()
 })()
