@@ -11,7 +11,20 @@ const shuffle = array => {
   }
   return newArray
 }
+const throttle = (func, limit, ...args) => {
+  let inThrottle
+  return function() {
+    const context = this
+    if (!inThrottle) {
+      func.apply(context, args)
+      inThrottle = true
+      setTimeout(() => { inThrottle = false }, limit)
+    }
+  }
+}
+
 window.randomInt = randomInt
 window.randomAround = randomAround
 window.randomColor = randomColor
 window.shuffle = shuffle
+window.throttle = throttle

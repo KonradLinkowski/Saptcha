@@ -1,4 +1,4 @@
-/* global Game, randomAround, shuffle */
+/* global Game, randomAround, shuffle, throttle */
 
 (() => {
   'use strict'
@@ -224,8 +224,8 @@
   window.addEventListener('appinstalled', () => installButton.classList.toggle('undisplayed', true))
   window.addEventListener('keydown', handleKeyboard)
   verifyButton.addEventListener('click', verifySelection)
-  skipButton.addEventListener('click', skip)
-  resetButton.addEventListener('click', skip)
+  skipButton.addEventListener('click', throttle(skip, 250))
+  resetButton.addEventListener('click', throttle(skip, 250))
   infoButton.addEventListener('click', () => openModal(true))
   clsoeButton.addEventListener('click', () => openModal(false))
   renderGrid(columns)

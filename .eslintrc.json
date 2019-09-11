@@ -23,6 +23,8 @@
         }],
         "implicit-arrow-linebreak": "off",
         "function-paren-newline": "off",
-        "no-console": "off"
+        "no-console": "off",
+        "space-before-function-paren": ["error", "never"],
+        "func-names": "off"
     }
 }
