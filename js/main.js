@@ -1,4 +1,4 @@
-/* global Game, randomColor, randomAround */
+/* global Game, randomAround, shuffle */
 
 (() => {
   'use strict'
@@ -17,6 +17,11 @@
   canvas.height = 128
   const ctx = canvas.getContext('2d')
 
+  const colors = [
+    '#ef4040', '#40ef40', '#4040ef', '#efef40', '#ef40ef', '#40efef',
+    '#ef8000', '#80ef40', '#8040ef', '#efef80', '#ef80ef', '#80efef',
+    '#ef4080', '#40ef80', '#4080ef', '#ef8080', '#80ef80', '#8080ef'
+  ]
   const columns = 4
   const selectedTiles = Array(columns ** 2).fill(false)
   const game = new Game(columns ** 2, 25)
@@ -95,12 +100,14 @@
   }
 
   const drawImage = components => {
+    const shuffled = shuffle(colors)
+    let colorIndex = 0
     ctx.fillStyle = '#eee'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     components.forEach(comp => {
       comp.forEach(shape => {
         ctx.beginPath()
-        ctx.fillStyle = randomColor()
+        ctx.fillStyle = shuffled[colorIndex % shuffled.length]
         if (typeof shape[0] === 'number') {
           const [x, y, r] = shape
           ctx.arc(
@@ -119,6 +126,7 @@
         ctx.fill()
         ctx.fillStyle = '#000'
         ctx.stroke()
+        colorIndex += 1
       })
     })
     return canvas.toDataURL()
