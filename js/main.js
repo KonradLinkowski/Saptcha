@@ -15,7 +15,7 @@
   ]
   const columns = 4
   const selectedTiles = Array(columns ** 2).fill(false)
-  const game = new Game(columns ** 2, 25)
+  let game = null
 
   const pointsCounter = document.querySelector('#points_counter')
   const mainWindow = document.querySelector('#main_window')
@@ -51,6 +51,14 @@
   }
 
   const loadStorage = () => {
+    const unlockedAnimals = localStorage.getItem('saptcha_unlocked_animals')
+    let animalsCount = 3
+    if (unlockedAnimals) {
+      animalsCount = Number(unlockedAnimals)
+    } else {
+      localStorage.setItem('saptcha_unlocked_animals', 3)
+    }
+    game = new Game(columns ** 2, 25, animalsCount, 100)
     const isFirstTime = !localStorage.getItem('saptcha_first_time')
     if (isFirstTime) {
       openModal(true)
@@ -77,7 +85,14 @@
   const objectsName = document.querySelector('#objects_name')
   const installButton = document.querySelector('#install_button')
   const infoButton = document.querySelector('#info_button')
-  const clsoeButton = document.querySelector('#close_button')
+  const closeButton = document.querySelector('#close_button')
+  const unlockCloseButton = document.querySelector('#unlock_close_button')
+  const unlockModal = document.querySelector('#unlock_modal')
+  const unlockImage = document.querySelector('#unlock_image')
+  const unlockName = document.querySelector('#unlock_name')
+  const unlockContinueButton = document.querySelector('#unlock_continue')
+
+  let unlockInterval = null
 
   const install = event => {
     event.prompt()
@@ -142,13 +157,26 @@
         ctx.beginPath()
         ctx.fillStyle = shuffled[colorIndex % shuffled.length]
         if (typeof shape[0] === 'number') {
-          const [x, y, r] = shape
-          ctx.arc(
-            x + randomAround(r / 8),
-            y + randomAround(r / 8),
-            r + randomAround(r / 8),
-            0, Math.PI * 2
-          )
+          if (shape.length === 3) {
+            const [x, y, r] = shape
+            ctx.arc(
+              x + randomAround(r / 8),
+              y + randomAround(r / 8),
+              r + randomAround(r / 8),
+              0, Math.PI * 2
+            )
+          } else {
+            const [x, y, rX, rY, a] = shape
+            const m = Math.min(rX, rY)
+            ctx.ellipse(
+              x + randomAround(m / 8),
+              y + randomAround(m / 8),
+              rX + randomAround(m / 8),
+              rY + randomAround(m / 8),
+              (a + randomAround(10)) * (Math.PI / 180),
+              0, Math.PI * 2
+            )
+          }
         } else {
           shape.forEach(([x, y], i) => {
             const fun = i === 0 ? ctx.moveTo.bind(ctx) : ctx.lineTo.bind(ctx)
@@ -165,28 +193,49 @@
     return canvas.toDataURL()
   }
 
+  const openUnlockModal = (open, name, comp) => {
+    if (!open) {
+      unlockModal.classList.toggle('hidden', true)
+      clearInterval(unlockInterval)
+      unlockInterval = null
+      return
+    }
+    unlockModal.classList.toggle('hidden', false)
+    const genImage = () => {
+      unlockImage.style.backgroundImage = `url(${drawImage(comp)})`
+      unlockName.textContent = `${(name.match(/^[aeiou]/i) ? 'an' : 'a')} ${name}`
+    }
+    genImage()
+    unlockInterval = setInterval(genImage, 500)
+  }
+
   const saveRecord = () => {
     const best = localStorage.getItem('saptcha_best_record')
     if (best < game.points) {
       localStorage.setItem('saptcha_best_record', game.points)
     }
     localStorage.setItem('saptcha_last_record', game.points)
+    localStorage.setItem('saptcha_unlocked_animals', game.unlockedCount)
   }
 
   const newRound = () => {
     const { comps, expected } = game.newRound()
+    const fullName = `${(expected.match(/^[aeiou]/i) ? 'an' : 'a')} ${expected}`
     tiles.forEach(({ wrapper, image, index }) => {
       selectTile(wrapper, false)
       // eslint-disable-next-line no-param-reassign
       image.style.backgroundImage = `url(${drawImage(comps[index])})`
     })
-    objectsName.textContent = `${(expected.match(/^[aeiou]/i) ? 'an' : 'a')} ${expected}`
+    objectsName.textContent = fullName
   }
 
   const verifySelection = () => {
-    const { curr, next } = game.verify(selectedTiles)
+    const { curr, next, newAnimal } = game.verify(selectedTiles)
     countUp(curr, next, 1, 5)
     saveRecord()
+    if (newAnimal) {
+      openUnlockModal(true, newAnimal.name, newAnimal.comps)
+    }
     newRound()
   }
 
@@ -236,7 +285,9 @@
   skipButton.addEventListener('click', throttle(skip, 250))
   resetButton.addEventListener('click', throttle(skip, 250))
   infoButton.addEventListener('click', () => openModal(true))
-  clsoeButton.addEventListener('click', () => openModal(false))
+  closeButton.addEventListener('click', () => openModal(false))
+  unlockCloseButton.addEventListener('click', () => openUnlockModal(false))
+  unlockContinueButton.addEventListener('click', () => openUnlockModal(false))
   renderGrid(columns)
   newRound()
 })()

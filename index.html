@@ -66,8 +66,8 @@
           <button class="button button--submit" id="skip_button">Skip</button>
         </footer>
       </div>
-      <section id="modal" class="modal hidden">
-        <div id="intro" class="intro">
+      <div id="modal" class="modal hidden">
+        <article id="intro_screen" class="intro">
           <h1 class="intro__title glow">Saptcha</h1>
           <p>
             <strong class="intro__subtitle">
@@ -88,14 +88,32 @@
           <p>
             © 2019 Konrad Linkowski
           </p>
-        </div>
+        </article>
         <button class="button button--action button--close" id="close_button">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
           </svg>
         </button>
-      </section>
+      </div>
+      <div id="unlock_modal" class="modal hidden">
+        <article id="unlock_screen" class="unlock_screen">
+          <div class="header__info">
+            <span class="info__select">You have unlocked</span>
+            <strong class="info__object" id="unlock_name"></strong>
+          </div>
+          <div class="unlock_container">
+            <div id="unlock_image" class="unlock_screen__image"></div>
+            <button class="button button--submit" id="unlock_continue">Continue</button>
+          </div>
+        </article>
+        <button class="button button--action button--close" id="unlock_close_button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            <path d="M0 0h24v24H0z" fill="none"/>
+          </svg>
+        </button>
+      </div>
     </main>
   </div>
   <script src="registerServiceWorker.js"></script>

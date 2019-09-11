@@ -104,6 +104,19 @@ html {
   font-weight: normal;
 }
 
+.unlock_screen__image {
+  height: 128px;
+  width: 128px;
+  margin: 30px auto;
+}
+
+.unlock_container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .window__header {
   position: relative;
   display: flex;
