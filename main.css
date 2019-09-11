@@ -37,19 +37,71 @@ html {
   font-weight: bold;
 }
 
-.points__counter--win {
+.win {
   color: #0f0;
 }
 
-.points__counter--lose {
+.lose {
   color: #f00;
 }
 
 .window {
-  width: var(--window-width);
   border: 1px solid rgb(204, 204, 204);
   box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px;
   color: white;
+  position: relative;
+}
+
+.window__wrapper {
+  width: var(--window-width);
+  position: relative;
+}
+
+.covered {
+  filter: blur(4px);
+  transition: .5s filter ease;
+}
+
+.modal {
+  box-sizing: border-box;
+  width: var(--window-width);
+  background-color: rgb(0, 0, 0, 0.85);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: calc(24px + var(--padding));
+  overflow-x: hidden;
+  overflow-y: auto;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity .5s ease;
+}
+
+.modal.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s ease;
+}
+
+.intro .glow {
+  font-weight: bold;
+  text-shadow: 0 0 5px #ffffff;
+}
+
+.intro__title {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.intro__header {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.intro__subtitle {
+  font-weight: normal;
 }
 
 .window__header {
@@ -154,7 +206,7 @@ html {
 
 .button {
   background: none;
-  box-shadow: 0;
+  box-shadow: none;
   border: 0;
   cursor: pointer;
   color: white;
@@ -166,6 +218,18 @@ html {
 .button--action {
   width: 48px;
   opacity: .55;
+}
+
+.button--close {
+  color: white;
+  position: absolute;
+  top: calc(17px + var(--padding));
+  right: calc(17px + var(--padding));
+  z-index: 1000;
+  opacity: 1;
+  fill: white;
+  line-height: 1;
+  width: 42px;
 }
 
 .button--action:hover, .button--action:focus {
@@ -210,6 +274,11 @@ html {
 }
 
 @keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-out {
   from { opacity: 0; }
   to   { opacity: 1; }
 }

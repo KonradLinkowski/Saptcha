@@ -11,6 +11,11 @@
   const objectsName = document.querySelector('#objects_name')
   const pointsCounter = document.querySelector('#points_counter')
   const installButton = document.querySelector('#install_button')
+  const infoButton = document.querySelector('#info_button')
+  const clsoeButton = document.querySelector('#close_button')
+
+  const mainWindow = document.querySelector('#main_window')
+  const modal = document.querySelector('#modal')
 
   const canvas = document.createElement('canvas')
   canvas.width = 128
@@ -38,15 +43,20 @@
     })
   }
 
+  const openModal = open => {
+    modal.classList.toggle('hidden', !open)
+    mainWindow.classList.toggle('covered', open)
+  }
+
   const countUp = (curr, max, jump, pad) => {
     let sum = curr
     let next = 0
     if (max > curr) {
-      pointsCounter.classList.toggle('points__counter--win', true)
+      pointsCounter.classList.toggle('win', true)
       sum += jump
       next = sum > max ? max : sum
     } else {
-      pointsCounter.classList.toggle('points__counter--lose', true)
+      pointsCounter.classList.toggle('lose', true)
       sum -= jump
       next = sum < 0 ? 0 : sum
     }
@@ -54,7 +64,7 @@
     if (next !== max) {
       setTimeout(countUp, 25, next, max, jump, pad)
     } else {
-      pointsCounter.classList.remove('points__counter--win', 'points__counter--lose')
+      pointsCounter.classList.remove('win', 'lose')
     }
   }
 
@@ -216,6 +226,8 @@
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', skip)
   resetButton.addEventListener('click', skip)
+  infoButton.addEventListener('click', () => openModal(true))
+  clsoeButton.addEventListener('click', () => openModal(false))
   renderGrid(columns)
   loadStorage()
   newRound()
