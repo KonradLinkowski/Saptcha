@@ -1,4 +1,4 @@
-/* global Game, randomAround, shuffle, throttle, clamp */
+/* global Game, randomAround, shuffle, throttle, clamp, ZZFX */
 
 (() => {
   'use strict'
@@ -17,6 +17,8 @@
   const selectedTiles = Array(columns ** 2).fill(false)
   let game = null
 
+  let musicEnabled = false
+
   const winScore = 35
   const loseScore = 25
 
@@ -29,6 +31,26 @@
   const loseText = document.querySelector('#lose-text')
 
   const openModal = open => {
+    if (open) {
+      ZZFX.z(55789, {
+        volume: 0.5,
+        frequency: 150,
+        length: 0.5,
+        attack: 0.4,
+        slide: 0,
+        modulation: 0,
+        modulationPhase: 0.1
+      })
+    } else {
+      ZZFX.z(77070, {
+        volume: 0.5,
+        frequency: 70,
+        length: 0.5,
+        attack: 0.1,
+        slide: 0,
+        modulationPhase: 0.1
+      })
+    }
     winText.textContent = winScore
     loseText.textContent = loseScore
     modal.classList.toggle('hidden', !open)
@@ -104,6 +126,8 @@
   const unlockImage = document.querySelector('#unlock_image')
   const unlockName = document.querySelector('#unlock_name')
   const unlockContinueButton = document.querySelector('#unlock_continue')
+  const soundOnButton = document.querySelector('#sound_on')
+  const soundOffButton = document.querySelector('#sound_off')
 
   let unlockInterval = null
 
@@ -128,6 +152,9 @@
   }
 
   const onSelectTile = e => {
+    if (musicEnabled) {
+      ZZFX.z(6982, { volume: 0.5, frequency: 99, length: 0.5 })
+    }
     selectTile(e.currentTarget)
   }
 
@@ -208,15 +235,32 @@
 
   const openUnlockModal = (open, name, comp) => {
     if (!open) {
+      ZZFX.z(77070, {
+        volume: 0.5,
+        frequency: 70,
+        length: 0.5,
+        attack: 0.1,
+        slide: 0,
+        modulationPhase: 0.1
+      })
       unlockModal.classList.toggle('hidden', true)
       clearInterval(unlockInterval)
       unlockInterval = null
       return
     }
+    ZZFX.z(8464, { volume: 0.5, length: 0.5, modulation: 0 })
     unlockModal.classList.toggle('hidden', false)
     const genImage = () => {
       unlockImage.style.backgroundImage = `url(${drawImage(comp)})`
       unlockName.textContent = `${(name.match(/^[aeiou]/i) ? 'an' : 'a')} ${name}`
+      ZZFX.z(77070, {
+        volume: 0.5,
+        frequency: 130,
+        length: 0.5,
+        attack: 0.1,
+        slide: 0,
+        modulationPhase: 0.1
+      })
     }
     genImage()
     unlockInterval = setInterval(genImage, 500)
@@ -243,7 +287,14 @@
     objectsName.textContent = fullName
   }
 
+  const enableSoundButtons = () => {
+    soundOnButton.removeAttribute('disabled')
+  }
+
   const verifySelection = () => {
+    if (musicEnabled) {
+      ZZFX.z(44781, { frequency: 99, volume: 0.5 })
+    }
     const { curr, next, newAnimal } = game.verify(selectedTiles)
     countUp(curr, next, 1, 5)
     saveRecord()
@@ -254,8 +305,30 @@
   }
 
   const skip = () => {
+    if (musicEnabled) {
+      ZZFX.z(76284, { volume: 0.5, frequency: 99, length: 0.5 })
+    }
     newRound()
   }
+
+  const enableMusic = turnOn => {
+    soundOffButton.classList.toggle('undisplayed', !turnOn)
+    soundOnButton.classList.toggle('undisplayed', turnOn)
+    musicEnabled = turnOn
+    localStorage.setItem('saptcha_sound_enabled', turnOn)
+    if (turnOn) {
+      ZZFX.z(98452, {
+        volume: 0.5, frequency: 99, length: 0.5, modulation: 0
+      })
+    }
+  }
+
+  const enableMonetization = () => {
+    const soundEnabled = Boolean(localStorage.getItem('saptcha_sound_enabled'))
+    enableMusic(soundEnabled)
+    enableSoundButtons()
+  }
+
 
   const moveToOtherTile = jump => {
     const index = Number(document.activeElement.dataset.index)
@@ -302,6 +375,16 @@
   closeButton.addEventListener('click', () => openModal(false))
   unlockCloseButton.addEventListener('click', () => openUnlockModal(false))
   unlockContinueButton.addEventListener('click', () => openUnlockModal(false))
+  soundOffButton.addEventListener('click', () => enableMusic(false))
+  soundOnButton.addEventListener('click', () => enableMusic(true))
+  if (document.monetization) {
+    if (document.monetization.state === 'started') {
+      enableMonetization()
+    }
+    document.monetization.addEventListener('monetizationstart', () => {
+      enableMonetization()
+    })
+  }
   renderGrid(columns)
   newRound()
 })()

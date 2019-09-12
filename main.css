@@ -226,6 +226,11 @@ html {
   opacity: .55;
 }
 
+.button--action:disabled {
+  opacity: .3;
+  cursor: initial;
+}
+
 .button--close {
   color: white;
   position: absolute;
@@ -240,7 +245,7 @@ html {
   border-radius: 100% 0 0 0;
 }
 
-.button--action:hover, .button--action:focus {
+.button--action:hover:enabled, .button--action:focus:enabled {
   opacity: .8;
   outline: none;
 }
