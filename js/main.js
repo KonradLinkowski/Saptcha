@@ -193,7 +193,7 @@
         } else {
           shape.forEach(([x, y], i) => {
             const fun = i === 0 ? ctx.moveTo.bind(ctx) : ctx.lineTo.bind(ctx)
-            fun(x + randomAround(4), y + randomAround(4))
+            fun(x + randomAround(4), y + randomAround(2))
           })
         }
         ctx.closePath()
