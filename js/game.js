@@ -30,7 +30,7 @@ class Game {
         }
       }
     }
-    this.points = clamp(this.points + this.penalty, 0, Number.MAX_SAFE_INTEGER)
+    this.points = clamp(this.points - this.penalty, 0, Number.MAX_SAFE_INTEGER)
     return {
       curr: currPoints, next: this.points
     }
