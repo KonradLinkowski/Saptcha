@@ -30,26 +30,28 @@
   const winText = document.querySelector('#win-text')
   const loseText = document.querySelector('#lose-text')
 
-  const openModal = open => {
-    if (open) {
-      ZZFX.z(55789, {
-        volume: 0.5,
-        frequency: 150,
-        length: 0.5,
-        attack: 0.4,
-        slide: 0,
-        modulation: 0,
-        modulationPhase: 0.1
-      })
-    } else {
-      ZZFX.z(77070, {
-        volume: 0.5,
-        frequency: 70,
-        length: 0.5,
-        attack: 0.1,
-        slide: 0,
-        modulationPhase: 0.1
-      })
+  const openModal = (open, force = false) => {
+    if (!force) {
+      if (open) {
+        ZZFX.z(55789, {
+          volume: 1,
+          frequency: 150,
+          length: 0.5,
+          attack: 0.4,
+          slide: 0,
+          modulation: 0,
+          modulationPhase: 0.1
+        })
+      } else {
+        ZZFX.z(77070, {
+          volume: 1,
+          frequency: 70,
+          length: 0.5,
+          attack: 0.1,
+          slide: 0,
+          modulationPhase: 0.1
+        })
+      }
     }
     winText.textContent = winScore
     loseText.textContent = loseScore
@@ -99,7 +101,7 @@
     game = new Game(columns ** 2, winScore, loseScore, animalsCount, 3, 100)
     const isFirstTime = !localStorage.getItem('saptcha_first_time')
     if (isFirstTime) {
-      openModal(true)
+      openModal(true, true)
     }
     const lastPoints = localStorage.getItem('saptcha_last_record')
     if (lastPoints) {
@@ -153,7 +155,7 @@
 
   const onSelectTile = e => {
     if (musicEnabled) {
-      ZZFX.z(6982, { volume: 0.5, frequency: 99, length: 0.5 })
+      ZZFX.z(6982, { volume: 1, frequency: 99, length: 0.5 })
     }
     selectTile(e.currentTarget)
   }
@@ -236,7 +238,7 @@
   const openUnlockModal = (open, name, comp) => {
     if (!open) {
       ZZFX.z(77070, {
-        volume: 0.5,
+        volume: 1,
         frequency: 70,
         length: 0.5,
         attack: 0.1,
@@ -248,13 +250,13 @@
       unlockInterval = null
       return
     }
-    ZZFX.z(8464, { volume: 0.5, length: 0.5, modulation: 0 })
+    ZZFX.z(8464, { volume: 1, length: 0.5, modulation: 0 })
     unlockModal.classList.toggle('hidden', false)
     const genImage = () => {
       unlockImage.style.backgroundImage = `url(${drawImage(comp)})`
       unlockName.textContent = `${(name.match(/^[aeiou]/i) ? 'an' : 'a')} ${name}`
       ZZFX.z(77070, {
-        volume: 0.5,
+        volume: 1,
         frequency: 130,
         length: 0.5,
         attack: 0.1,
@@ -293,7 +295,7 @@
 
   const verifySelection = () => {
     if (musicEnabled) {
-      ZZFX.z(44781, { frequency: 99, volume: 0.5 })
+      ZZFX.z(44781, { frequency: 99, volume: 1 })
     }
     const { curr, next, newAnimal } = game.verify(selectedTiles)
     countUp(curr, next, 1, 5)
@@ -306,26 +308,26 @@
 
   const skip = () => {
     if (musicEnabled) {
-      ZZFX.z(76284, { volume: 0.5, frequency: 99, length: 0.5 })
+      ZZFX.z(76284, { volume: 1, frequency: 99, length: 0.5 })
     }
     newRound()
   }
 
-  const enableMusic = turnOn => {
+  const enableMusic = (turnOn, force = false) => {
     soundOffButton.classList.toggle('undisplayed', !turnOn)
     soundOnButton.classList.toggle('undisplayed', turnOn)
     musicEnabled = turnOn
     localStorage.setItem('saptcha_sound_enabled', turnOn)
-    if (turnOn) {
+    if (turnOn && !force) {
       ZZFX.z(98452, {
-        volume: 0.5, frequency: 99, length: 0.5, modulation: 0
+        volume: 1, frequency: 99, length: 0.5, modulation: 0
       })
     }
   }
 
   const enableMonetization = () => {
     const soundEnabled = Boolean(localStorage.getItem('saptcha_sound_enabled'))
-    enableMusic(soundEnabled)
+    enableMusic(soundEnabled, true)
     enableSoundButtons()
   }
 
