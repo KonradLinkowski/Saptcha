@@ -38,7 +38,7 @@ class Game {
     this.images = Array(this.size).fill(0).map(() =>
       this.unlockedAnimals[randomInt(0, this.unlockedAnimals.length)]
     )
-    this.expectedObject = this.unlockedAnimals[randomInt(0, this.unlockedAnimals.length)].name
+    this.expectedObject = this.images[randomInt(0, this.images.length)].name
     return {
       comps: this.images.map(i => i.comps),
       expected: this.expectedObject
