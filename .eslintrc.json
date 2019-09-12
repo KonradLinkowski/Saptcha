@@ -24,7 +24,11 @@
         "implicit-arrow-linebreak": "off",
         "function-paren-newline": "off",
         "no-console": "off",
-        "space-before-function-paren": ["error", "never"],
+        "space-before-function-paren": ["error", {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
         "func-names": "off"
     }
 }
