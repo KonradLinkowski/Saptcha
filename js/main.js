@@ -290,10 +290,10 @@
   }
 
   window.addEventListener('beforeinstallprompt', e => {
-    installButton.classList.toggle('undisplayed', false)
+    installButton.classList.toggle('hidden', false)
     installButton.addEventListener('click', () => install(e))
   })
-  window.addEventListener('appinstalled', () => installButton.classList.toggle('undisplayed', true))
+  window.addEventListener('appinstalled', () => installButton.classList.toggle('hidden', true))
   window.addEventListener('keydown', handleKeyboard)
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', throttle(skip, 250))
