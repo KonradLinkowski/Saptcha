@@ -29,6 +29,8 @@
   const bestScore = document.querySelector('#best-score')
   const winText = document.querySelector('#win-text')
   const loseText = document.querySelector('#lose-text')
+  const winArrow = document.querySelector('#win-arrow')
+  const loseArrow = document.querySelector('#lose-arrow')
 
   const playSound = (sound, options) => {
     if (musicEnabled && window.AudioContext) {
@@ -74,17 +76,21 @@
     let next = 0
     if (max > curr) {
       pointsCounter.classList.toggle('win', true)
+      winArrow.classList.toggle('undisplayed', false)
       sum += jump
       next = sum > max ? max : sum
     } else {
       pointsCounter.classList.toggle('lose', true)
+      loseArrow.classList.toggle('undisplayed', false)
       sum -= jump
       next = sum < 0 ? 0 : sum
     }
     pointsCounter.textContent = next.toString().padStart(pad, '0')
     if (next !== max) {
-      setTimeout(countUp, 25, next, max, jump, pad)
+      setTimeout(countUp, 45, next, max, jump, pad)
     } else {
+      winArrow.classList.toggle('undisplayed', true)
+      loseArrow.classList.toggle('undisplayed', true)
       pointsCounter.classList.remove('win', 'lose')
     }
   }
