@@ -30,10 +30,16 @@
   const winText = document.querySelector('#win-text')
   const loseText = document.querySelector('#lose-text')
 
+  const playSound = (sound, options) => {
+    if (musicEnabled && window.AudioContext) {
+      ZZFX.z(sound, options)
+    }
+  }
+
   const openModal = (open, force = false) => {
     if (!force) {
       if (open) {
-        ZZFX.z(55789, {
+        playSound(55789, {
           volume: 1,
           frequency: 150,
           length: 0.5,
@@ -43,7 +49,7 @@
           modulationPhase: 0.1
         })
       } else {
-        ZZFX.z(77070, {
+        playSound(77070, {
           volume: 1,
           frequency: 70,
           length: 0.5,
@@ -154,9 +160,7 @@
   }
 
   const onSelectTile = e => {
-    if (musicEnabled) {
-      ZZFX.z(6982, { volume: 1, frequency: 99, length: 0.5 })
-    }
+    playSound(6982, { volume: 1, frequency: 99, length: 0.5 })
     selectTile(e.currentTarget)
   }
 
@@ -237,7 +241,7 @@
 
   const openUnlockModal = (open, name, comp) => {
     if (!open) {
-      ZZFX.z(77070, {
+      playSound(77070, {
         volume: 1,
         frequency: 70,
         length: 0.5,
@@ -250,12 +254,12 @@
       unlockInterval = null
       return
     }
-    ZZFX.z(8464, { volume: 1, length: 0.5, modulation: 0 })
+    playSound(8464, { volume: 1, length: 0.5, modulation: 0 })
     unlockModal.classList.toggle('hidden', false)
     const genImage = () => {
       unlockImage.style.backgroundImage = `url(${drawImage(comp)})`
       unlockName.textContent = `${(name.match(/^[aeiou]/i) ? 'an' : 'a')} ${name}`
-      ZZFX.z(77070, {
+      playSound(77070, {
         volume: 1,
         frequency: 130,
         length: 0.5,
@@ -294,9 +298,7 @@
   }
 
   const verifySelection = () => {
-    if (musicEnabled) {
-      ZZFX.z(44781, { frequency: 99, volume: 1 })
-    }
+    playSound(44781, { frequency: 99, volume: 1 })
     const { curr, next, newAnimal } = game.verify(selectedTiles)
     countUp(curr, next, 1, 5)
     saveRecord()
@@ -307,9 +309,7 @@
   }
 
   const skip = () => {
-    if (musicEnabled) {
-      ZZFX.z(76284, { volume: 1, frequency: 99, length: 0.5 })
-    }
+    playSound(76284, { volume: 1, frequency: 99, length: 0.5 })
     newRound()
   }
 
@@ -319,7 +319,7 @@
     musicEnabled = turnOn
     localStorage.setItem('saptcha_sound_enabled', turnOn)
     if (turnOn && !force) {
-      ZZFX.z(98452, {
+      playSound(98452, {
         volume: 1, frequency: 99, length: 0.5, modulation: 0
       })
     }
