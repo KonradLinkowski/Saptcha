@@ -29,6 +29,7 @@
             "named": "never",
             "asyncArrow": "always"
         }],
+        "no-confusing-arrow": "off",
         "func-names": "off"
     }
 }

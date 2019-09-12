@@ -15,8 +15,9 @@ class Game {
   }
 
   verify(selected) {
-    const won = selected.map((e, i) => e && i).filter(e => e).join()
-      === this.images.map((t, i) => t.name === this.expectedObject && i).filter(t => t).join()
+    const won = this.images.every((image, index) =>
+      (image.name === this.expectedObject) === selected[index]
+    )
     const currPoints = this.points
     if (won) {
       this.points = this.points + this.reward

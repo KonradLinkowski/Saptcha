@@ -82,7 +82,7 @@
     const lastPoints = localStorage.getItem('saptcha_last_record')
     if (lastPoints) {
       game.points = +lastPoints
-      countUp(0, +lastPoints, 5, 5)
+      countUp(0, +lastPoints, 26, 5)
     } else {
       localStorage.setItem('saptcha_last_record', game.points)
     }
