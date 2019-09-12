@@ -1,12 +1,20 @@
 :root {
-  --padding: 7px;
+  --padding-header: 24px;
+  --padding-window: 7px;
   --background: rgb(74, 144, 226);
   --window-width: 100vw;
+  --color-win: #0f0;
+  --color-lose: #f00;
+  --color-text: white;
+  --time-animation: 0.5s;
+}
+* {
+  box-sizing: border-box;
 }
 
 html {
   font-family: helvetica, arial, sans-serif;
-  color: white;
+  color: var(--color-text);
 }
 
 .wrapper {
@@ -24,12 +32,11 @@ html {
 
 .points {
   position: absolute;
-  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   font-size: 24px;
-  right: 24px;
-  top: 24px;
+  right: var(--padding-header);
+  top:  var(--padding-header);
 }
 
 .points__counter {
@@ -40,7 +47,7 @@ html {
 .window {
   border: 1px solid rgb(204, 204, 204);
   box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px;
-  color: white;
+  color: var(--color-text);
   position: fixed;
   bottom: 0;
 }
@@ -52,11 +59,10 @@ html {
 
 .covered {
   filter: blur(4px);
-  transition: .5s filter ease;
+  transition: var(--time-animation) filter ease;
 }
 
 .modal {
-  box-sizing: border-box;
   width: var(--window-width);
   background-color: rgb(0, 0, 0, 0.85);
   position: fixed;
@@ -64,23 +70,23 @@ html {
   left: 0;
   bottom: 0;
   right: 0;
-  padding: calc(24px + var(--padding));
+  padding: calc(var(--padding-header) + var(--padding-window));
   overflow-x: hidden;
   overflow-y: auto;
   visibility: visible;
   opacity: 1;
-  transition: opacity .5s ease;
+  transition: opacity var(--time-animation) ease;
 }
 
 .modal.hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s .5s, opacity .5s ease;
+  transition: visibility 0s var(--time-animation), opacity var(--time-animation) ease;
 }
 
 .intro .glow {
   font-weight: bold;
-  text-shadow: 0 0 5px #ffffff;
+  text-shadow: 0 0 5px var(--color-text);
 }
 
 .intro__title {
@@ -115,9 +121,9 @@ html {
   display: flex;
   justify-content: space-between;
   background-color: var(--background);
-  margin: var(--padding);
+  margin: var(--padding-window);
   margin-bottom: 0;
-  padding: 24px;
+  padding: var(--padding-header);
 }
 
 .header__info {
@@ -138,9 +144,8 @@ html {
 }
 
 .window__body {
-  box-sizing: border-box;
   height: var(--window-width);
-  padding: var(--padding);
+  padding: var(--padding-window);
   overflow: hidden;
 }
 
@@ -207,7 +212,7 @@ html {
   margin-top: 1px;
   display: flex;
   justify-content: space-between;
-  padding: var(--padding);
+  padding: var(--padding-window);
 }
 
 .button {
@@ -215,7 +220,7 @@ html {
   box-shadow: none;
   border: 0;
   cursor: pointer;
-  color: white;
+  color: var(--color-text);
   height: 42px;
   padding: 0;
   font-family: inherit;
@@ -232,13 +237,13 @@ html {
 }
 
 .button--close {
-  color: white;
+  color: var(--color-text);
   position: absolute;
   bottom: 0;
   right: 0;
   z-index: 1000;
   opacity: 1;
-  fill: white;
+  fill: var(--color-text);
   line-height: 1;
   width: 90px;
   height: 90px;
@@ -263,36 +268,36 @@ html {
   font-weight: bold;
   font-size: 14px;
   border-radius: 2px;
-  transition: all 0.5s ease;
+  transition: all var(--time-animation) ease;
 }
 
 .button--submit:focus {
   outline: 0;
-  box-shadow: 0 0 0 2pt #185abc;
+  box-shadow: 0 0 0 3px #185abc;
 }
 
 .button.fade-in {
-  transition: visibility 0s .5s, opacity .5s ease;
+  transition: visibility 0s var(--time-animation), opacity var(--time-animation) ease;
 }
 
 .button.fade-in.hidden {
-  transition: opacity .5s ease;
+  transition: opacity var(--time-animation) ease;
 }
 
 .win {
-  color: #0f0;
+  color: var(--color-win);
 }
 
 .win.glow {
-  text-shadow: 0 0 5px #0f0;
+  text-shadow: 0 0 5px var(--color-win);
 }
 
 .lose {
-  color: #f00;
+  color: var(--color-lose);
 }
 
 .lose.glow {
-  text-shadow: 0 0 5px #f00;
+  text-shadow: 0 0 5px var(--color-lose);
 }
 
 .hidden {
