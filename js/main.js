@@ -1,4 +1,4 @@
-/* global Game, randomAround, shuffle, throttle */
+/* global Game, randomAround, shuffle, throttle, clamp */
 
 (() => {
   'use strict'
@@ -160,20 +160,20 @@
           if (shape.length === 3) {
             const [x, y, r] = shape
             ctx.arc(
-              x + randomAround(r / 8),
-              y + randomAround(r / 8),
-              r + randomAround(r / 8),
+              clamp(x + randomAround(r / 8), 0, 128),
+              clamp(y + randomAround(r / 8), 0, 128),
+              clamp(r + randomAround(r / 8), 0, 128),
               0, Math.PI * 2
             )
           } else {
             const [x, y, rX, rY, a] = shape
             const m = Math.min(rX, rY)
             ctx.ellipse(
-              x + randomAround(m / 8),
-              y + randomAround(m / 8),
-              rX + randomAround(m / 8),
-              rY + randomAround(m / 8),
-              (a + randomAround(10)) * (Math.PI / 180),
+              clamp(x + randomAround(m / 8), 0, 128),
+              clamp(y + randomAround(m / 8), 0, 128),
+              clamp(rX + randomAround(m / 8), 0, 128),
+              clamp(rY + randomAround(m / 8), 0, 128),
+              (a + randomAround(5)) * (Math.PI / 180),
               0, Math.PI * 2
             )
           }

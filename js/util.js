@@ -22,9 +22,19 @@ const throttle = (func, limit, ...args) => {
     }
   }
 }
+const clamp = (val, min, max) => {
+  if (val > max) {
+    return max
+  }
+  if (val < min) {
+    return min
+  }
+  return val
+}
 
 window.randomInt = randomInt
 window.randomAround = randomAround
 window.randomColor = randomColor
 window.shuffle = shuffle
 window.throttle = throttle
+window.clamp = clamp
