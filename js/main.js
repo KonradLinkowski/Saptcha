@@ -58,7 +58,7 @@
     } else {
       localStorage.setItem('saptcha_unlocked_animals', 3)
     }
-    game = new Game(columns ** 2, 25, animalsCount, 100)
+    game = new Game(columns ** 2, 35, 25, animalsCount, 3, 100)
     const isFirstTime = !localStorage.getItem('saptcha_first_time')
     if (isFirstTime) {
       openModal(true)
@@ -180,7 +180,7 @@
         } else {
           shape.forEach(([x, y], i) => {
             const fun = i === 0 ? ctx.moveTo.bind(ctx) : ctx.lineTo.bind(ctx)
-            fun(x + randomAround(1), y + randomAround(1))
+            fun(x + randomAround(4), y + randomAround(4))
           })
         }
         ctx.closePath()

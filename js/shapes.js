@@ -1,22 +1,5 @@
 /* globals randomInt, shuffle */
 const comp = {
-  body: {
-    round: [
-      [64, 64, 40]
-    ],
-    bigRound: [
-      [64, 64, 45]
-    ],
-    smallRound: [
-      [64, 64, 35]
-    ],
-    tall: [
-      [64, 64, 15, 44, 0]
-    ],
-    wide: [
-      [64, 64, 40, 35, 0]
-    ]
-  },
   ears: {
     pointed: [[
       [34, 50],
@@ -32,6 +15,26 @@ const comp = {
     ],
     smallRound: [
       [38, 32, 20], [90, 32, 20]
+    ],
+    rounded: [
+      [38, 32, 10, 16, -20], [90, 32, 10, 16, 20]
+    ]
+  },
+  body: {
+    round: [
+      [64, 64, 40]
+    ],
+    bigRound: [
+      [64, 64, 45]
+    ],
+    smallRound: [
+      [64, 64, 35]
+    ],
+    tall: [
+      [64, 64, 15, 44, 0]
+    ],
+    wide: [
+      [64, 64, 40, 35, 0]
     ]
   },
   eyes: {
@@ -115,6 +118,11 @@ const comp = {
       [[84, 56], [84, 76], [108, 68]],
       [[44, 56], [44, 76], [20, 68]]
     ]
+  },
+  horn: {
+    uni: [[
+      [54, 42], [74, 42], [64, 4]
+    ]]
   }
 }
 
@@ -173,6 +181,13 @@ const animals = Object.entries({
     comp.eyes.froggy,
     comp.nose.dots,
     comp.mouth.smiling
+  ],
+  unicorn: [
+    comp.ears.rounded,
+    comp.body.round,
+    comp.eyes.smallRound,
+    comp.horn.uni,
+    comp.nose.piggy
   ],
   mutant: shuffle(Object.values(comp).map(e => {
     const values = Object.values(e)
