@@ -17,11 +17,20 @@
   const selectedTiles = Array(columns ** 2).fill(false)
   let game = null
 
+  const winScore = 35
+  const loseScore = 25
+
   const pointsCounter = document.querySelector('#points_counter')
   const mainWindow = document.querySelector('#main_window')
   const modal = document.querySelector('#modal')
 
+  const bestScore = document.querySelector('#best-score')
+  const winText = document.querySelector('#win-text')
+  const loseText = document.querySelector('#lose-text')
+
   const openModal = open => {
+    winText.textContent = winScore
+    loseText.textContent = loseScore
     modal.classList.toggle('hidden', !open)
     mainWindow.classList.toggle('covered', open)
     const isFirstTime = !localStorage.getItem('saptcha_first_time')
@@ -50,6 +59,13 @@
     }
   }
 
+  const updateBestRecord = () => {
+    const bestRecord = Number(localStorage.getItem('saptcha_best_record'))
+    const newBestRecord = game.points > bestRecord ? game.points : bestRecord
+    localStorage.setItem('saptcha_best_record', newBestRecord)
+    bestScore.textContent = bestRecord.toString().padStart(5, '0')
+  }
+
   const loadStorage = () => {
     const unlockedAnimals = localStorage.getItem('saptcha_unlocked_animals')
     let animalsCount = 3
@@ -58,7 +74,7 @@
     } else {
       localStorage.setItem('saptcha_unlocked_animals', 3)
     }
-    game = new Game(columns ** 2, 35, 25, animalsCount, 3, 100)
+    game = new Game(columns ** 2, winScore, loseScore, animalsCount, 3, 100)
     const isFirstTime = !localStorage.getItem('saptcha_first_time')
     if (isFirstTime) {
       openModal(true)
@@ -70,10 +86,7 @@
     } else {
       localStorage.setItem('saptcha_last_record', game.points)
     }
-    const bestRecord = localStorage.getItem('saptcha_best_record')
-    if (!bestRecord) {
-      localStorage.setItem('saptcha_best_record', game.points)
-    }
+    updateBestRecord()
   }
 
   loadStorage()
@@ -216,6 +229,7 @@
     }
     localStorage.setItem('saptcha_last_record', game.points)
     localStorage.setItem('saptcha_unlocked_animals', game.unlockedCount)
+    updateBestRecord()
   }
 
   const newRound = () => {

@@ -37,14 +37,6 @@ html {
   font-weight: bold;
 }
 
-.win {
-  color: #0f0;
-}
-
-.lose {
-  color: #f00;
-}
-
 .window {
   border: 1px solid rgb(204, 204, 204);
   box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px;
@@ -276,6 +268,22 @@ html {
 
 .button.fade-in {
   animation: buttons-fade-in 1s;
+}
+
+.win {
+  color: #0f0;
+}
+
+.win.glow {
+  text-shadow: 0 0 5px #0f0;
+}
+
+.lose {
+  color: #f00;
+}
+
+.lose.glow {
+  text-shadow: 0 0 5px #f00;
 }
 
 @keyframes buttons-fade-in {
