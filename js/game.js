@@ -30,6 +30,9 @@ class Game {
           curr: currPoints, next: this.points, newAnimal
         }
       }
+      return {
+        curr: currPoints, next: this.points
+      }
     }
     this.points = clamp(this.points - this.penalty, 0, Number.MAX_SAFE_INTEGER)
     return {
