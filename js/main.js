@@ -309,6 +309,7 @@
     countUp(curr, next, 1, 5)
     saveRecord()
     if (newAnimal) {
+      window.history.pushState({ unlockModal: true }, '')
       openUnlockModal(true, newAnimal.name, newAnimal.comps)
     }
     newRound()
@@ -370,6 +371,17 @@
     }
   }
 
+  window.history.replaceState({ modal: false, unlockModal: false }, '')
+  window.addEventListener('popstate', ({ state }) => {
+    if (state) {
+      if (state.modal === false) {
+        openModal(state.modal)
+      }
+      if (state.unlockModal === false) {
+        openUnlockModal(state.unlockModal)
+      }
+    }
+  })
   window.addEventListener('beforeinstallprompt', e => {
     installButton.classList.toggle('hidden', false)
     installButton.addEventListener('click', () => install(e))
@@ -379,10 +391,13 @@
   verifyButton.addEventListener('click', verifySelection)
   skipButton.addEventListener('click', throttle(skip, 250))
   resetButton.addEventListener('click', throttle(skip, 250))
-  infoButton.addEventListener('click', () => openModal(true))
-  closeButton.addEventListener('click', () => openModal(false))
-  unlockCloseButton.addEventListener('click', () => openUnlockModal(false))
-  unlockContinueButton.addEventListener('click', () => openUnlockModal(false))
+  infoButton.addEventListener('click', () => {
+    window.history.pushState({ modal: true }, '')
+    openModal(true)
+  })
+  closeButton.addEventListener('click', () => window.history.back())
+  unlockCloseButton.addEventListener('click', () => window.history.back())
+  unlockContinueButton.addEventListener('click', () => window.history.back())
   soundOffButton.addEventListener('click', () => enableMusic(false))
   soundOnButton.addEventListener('click', () => enableMusic(true))
   if (document.monetization) {
