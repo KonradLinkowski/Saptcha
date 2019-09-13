@@ -59,7 +59,6 @@ html {
 
 .covered {
   filter: blur(4px);
-  transition: var(--time-animation) filter ease;
 }
 
 .modal {
