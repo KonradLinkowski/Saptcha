@@ -134,11 +134,23 @@ const animals = Object.entries({
     comp.nose.round,
     comp.beard.whiskers
   ],
+  frog: [
+    comp.body.wide,
+    comp.eyes.froggy,
+    comp.nose.dots,
+    comp.mouth.smiling
+  ],
   bear: [
     comp.ears.smallRound,
     comp.body.bigRound,
     comp.eyes.round,
     comp.nose.bigRound
+  ],
+  pig: [
+    comp.ears.pointed,
+    comp.body.round,
+    comp.eyes.smallRound,
+    comp.nose.piggy
   ],
   mouse: [
     comp.ears.bigRound,
@@ -146,12 +158,6 @@ const animals = Object.entries({
     comp.eyes.round,
     comp.nose.round,
     comp.beard.whiskers
-  ],
-  pig: [
-    comp.ears.pointed,
-    comp.body.round,
-    comp.eyes.smallRound,
-    comp.nose.piggy
   ],
   panda: [
     comp.ears.smallRound,
@@ -175,12 +181,6 @@ const animals = Object.entries({
     comp.wings.butterflyish,
     comp.body.tall,
     comp.eyes.feelers
-  ],
-  frog: [
-    comp.body.wide,
-    comp.eyes.froggy,
-    comp.nose.dots,
-    comp.mouth.smiling
   ],
   unicorn: [
     comp.ears.rounded,
