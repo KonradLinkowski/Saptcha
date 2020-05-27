@@ -332,7 +332,7 @@
     }
   }
 
-  const enableMonetization = () => {
+  const enableSound = () => {
     const soundEnabled = Boolean(localStorage.getItem('saptcha_sound_enabled'))
     enableMusic(soundEnabled, true)
     enableSoundButtons()
@@ -400,14 +400,8 @@
   unlockContinueButton.addEventListener('click', () => window.history.back())
   soundOffButton.addEventListener('click', () => enableMusic(false))
   soundOnButton.addEventListener('click', () => enableMusic(true))
-  if (document.monetization) {
-    if (document.monetization.state === 'started') {
-      enableMonetization()
-    }
-    document.monetization.addEventListener('monetizationstart', () => {
-      enableMonetization()
-    })
-  }
+  enableSound()
+
   renderGrid(columns)
   newRound()
 })()
