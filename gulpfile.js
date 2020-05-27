@@ -23,7 +23,7 @@ gulp.task('sw', () =>
 )
 
 gulp.task('js', () =>
-  gulp.src(['js/{zzfx,util,shapes,game,main}.js'])
+  gulp.src(['js/{zzfx,sound,util,shapes,game,main}.js'])
   .pipe(minify({
     ext: {
       min: '.js'

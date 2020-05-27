@@ -1,4 +1,4 @@
-/* global Game, randomAround, shuffle, throttle, clamp, ZZFX */
+/* global Game, randomAround, shuffle, throttle, clamp, Sound */
 
 (() => {
   'use strict'
@@ -16,9 +16,6 @@
   const columns = 4
   const selectedTiles = Array(columns ** 2).fill(false)
   let game = null
-
-  let musicEnabled = false
-
   const winScore = 35
   const loseScore = 25
 
@@ -32,33 +29,12 @@
   const winArrow = document.querySelector('#win-arrow')
   const loseArrow = document.querySelector('#lose-arrow')
 
-  const playSound = (sound, options) => {
-    if (musicEnabled && window.AudioContext) {
-      ZZFX.z(sound, options)
-    }
-  }
-
   const openModal = (open, force = false) => {
     if (!force) {
       if (open) {
-        playSound(55789, {
-          volume: 1,
-          frequency: 150,
-          length: 0.5,
-          attack: 0.4,
-          slide: 0,
-          modulation: 0,
-          modulationPhase: 0.1
-        })
+        Sound.play(Sound.OPEN_MODAL)
       } else {
-        playSound(77070, {
-          volume: 1,
-          frequency: 70,
-          length: 0.5,
-          attack: 0.1,
-          slide: 0,
-          modulationPhase: 0.1
-        })
+        Sound.play(Sound.CLOSE_MODAL)
       }
     }
     winText.textContent = winScore
@@ -140,8 +116,6 @@
   const unlockImage = document.querySelector('#unlock_image')
   const unlockName = document.querySelector('#unlock_name')
   const unlockContinueButton = document.querySelector('#unlock_continue')
-  const soundOnButton = document.querySelector('#sound_on')
-  const soundOffButton = document.querySelector('#sound_off')
 
   let unlockInterval = null
 
@@ -166,7 +140,7 @@
   }
 
   const onSelectTile = e => {
-    playSound(6982, { volume: 1, frequency: 99, length: 0.5 })
+    Sound.play(Sound.SELECT_TILE)
     selectTile(e.currentTarget)
   }
 
@@ -247,32 +221,18 @@
 
   const openUnlockModal = (open, name, comp) => {
     if (!open) {
-      playSound(77070, {
-        volume: 1,
-        frequency: 70,
-        length: 0.5,
-        attack: 0.1,
-        slide: 0,
-        modulationPhase: 0.1
-      })
+      Sound.play(Sound.CLOSE_MODAL)
       unlockModal.classList.toggle('hidden', true)
       clearInterval(unlockInterval)
       unlockInterval = null
       return
     }
-    playSound(8464, { volume: 1, length: 0.5, modulation: 0 })
+    Sound.play(Sound.NEW_ANIMAL)
     unlockModal.classList.toggle('hidden', false)
     const genImage = () => {
       unlockImage.style.backgroundImage = `url(${drawImage(comp)})`
       unlockName.textContent = `${(name.match(/^[aeiou]/i) ? 'an' : 'a')} ${name}`
-      playSound(77070, {
-        volume: 1,
-        frequency: 130,
-        length: 0.5,
-        attack: 0.1,
-        slide: 0,
-        modulationPhase: 0.1
-      })
+      Sound.play(Sound.UNLOCK_CAROUSEL)
     }
     genImage()
     unlockInterval = setInterval(genImage, 500)
@@ -299,12 +259,8 @@
     objectsName.textContent = fullName
   }
 
-  const enableSoundButtons = () => {
-    soundOnButton.removeAttribute('disabled')
-  }
-
   const verifySelection = () => {
-    playSound(44781, { frequency: 99, volume: 1 })
+    Sound.play(Sound.VERIFY)
     const { curr, next, newAnimal } = game.verify(selectedTiles)
     countUp(curr, next, 1, 5)
     saveRecord()
@@ -316,28 +272,9 @@
   }
 
   const skip = () => {
-    playSound(76284, { volume: 1, frequency: 99, length: 0.5 })
+    Sound.play(Sound.SKIP)
     newRound()
   }
-
-  const enableMusic = (turnOn, force = false) => {
-    soundOffButton.classList.toggle('undisplayed', !turnOn)
-    soundOnButton.classList.toggle('undisplayed', turnOn)
-    musicEnabled = turnOn
-    localStorage.setItem('saptcha_sound_enabled', turnOn)
-    if (turnOn && !force) {
-      playSound(98452, {
-        volume: 1, frequency: 99, length: 0.5, modulation: 0
-      })
-    }
-  }
-
-  const enableSound = () => {
-    const soundEnabled = Boolean(localStorage.getItem('saptcha_sound_enabled'))
-    enableMusic(soundEnabled, true)
-    enableSoundButtons()
-  }
-
 
   const moveToOtherTile = jump => {
     const index = Number(document.activeElement.dataset.index)
@@ -398,9 +335,6 @@
   closeButton.addEventListener('click', () => window.history.back())
   unlockCloseButton.addEventListener('click', () => window.history.back())
   unlockContinueButton.addEventListener('click', () => window.history.back())
-  soundOffButton.addEventListener('click', () => enableMusic(false))
-  soundOnButton.addEventListener('click', () => enableMusic(true))
-  enableSound()
 
   renderGrid(columns)
   newRound()
