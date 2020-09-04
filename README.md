@@ -19,9 +19,8 @@ Earn points to unlock new types of animals.
 **Play [online](https://konradlinkowski.github.io/Saptcha/).**
 
 ## Screenshots
-![Unselected tiles][unselected]
-![Selected tiles][selected]
-![With some score][score]
+| ![Unselected tiles][unselected] | ![Selected tiles][selected] | ![With some score][score] |
+| --- | --- | --- |
 
 ## Licence
 Saptcha is [MIT licensed](LICENCE).
